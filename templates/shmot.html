@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lolkekmem</title>
+    <style>
+        body {
+            display: block;
+            text-align: center;
+            background-image: linear-gradient(to bottom, white, #000000); 
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh; 
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Стили для логотипа и названия */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+        }
+
+        img#logo {
+            max-width: 50px; 
+            height: auto;
+            margin-right: 10px; 
+        }
+
+        .logo-text {
+            color: rgb(0, 0, 0);
+            font-size: 24px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            float: right; 
+            margin-top: 10px; 
+            margin-right: 20px;
+        }
+
+        a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            border-radius: 5px;
+            padding: 5px 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Заголовок страницы */
+        header {
+            margin-top: 80px; /* Отступ для логотипа */
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            color: rgb(0, 0, 0);
+            font-size: 32px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+       
+        .category-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        figure {
+            text-align: center;
+            margin: 20px;
+        }
+
+        figcaption {
+            font-weight: bold;
+            color: rgb(255, 255, 255);
+            font-size: 18px;
+            margin-top: 10px;
+        }
+       
+        .category-container a img {
+            transition: all 0.3s ease-in-out;
+            border-radius: 10px;
+        }
+
+        .category-container a img:hover {
+            transform: scale(1.1); 
+            filter: brightness(1.2); 
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+     <!-- Кнопка закрытия справа -->
+    <ul>
+        <li width="-200%"><a href="/">X</a></li>
+    </ul>
+
+    <!-- Логотип и название слева -->
+    <div class="logo-container">
+        <img src="/static/img/loga.png" alt="Логотип HelPik" id="logo">
+        <div class="logo-text">HelPik</div>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <header>
+        <h1 class="page-title">Коллаборации</h1>
+    </header> 
+
+    <!-- Контейнер с коллаборациями -->
+    <div class="category-container">
+        <figure>
+            <a href="/shmot/aktn">
+                <img src="{{ url_for('static', filename='img/noiz.jpg') }}" alt="артист1" width="250px">
+            </a>
+            <figcaption>Noiz MS</figcaption>
+        </figure>
+
+        <figure>
+            <a href="/shmot/akts">
+                <img src="{{ url_for('static', filename='img/stint.jpg') }}" alt="артист2" width="250px">
+            </a>
+            <figcaption>Stint</figcaption>
+        </figure>
+        
+        <figure>
+            <a href="/shmot/akta">
+                <img src="{{ url_for('static', filename='img/smetana.png') }}" alt="артист3" width="250px">
+            </a>
+            <figcaption>Сметана BAND</figcaption>
+        </figure>
+    </div>
+</body>
+</html>

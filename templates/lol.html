@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lolkekmem</title>
+   <style>
+        /* Основные стили для выравнивания по центру */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Контейнер слайдера */
+        .slider {
+            width: 1000px; /* Фиксированная ширина */
+            overflow: hidden; /* Скрываем выходящие за границы изображения */
+            position: relative;
+            margin: 20px auto; /* Центрирование слайдера */
+        }
+
+        /* Контейнер, в котором будут находиться все слайды */
+        .slides {
+            display: flex; /* Располагаем слайды в ряд */
+            width: 300%; /* Делаем ширину в три раза больше (по количеству слайдов) */
+            transition: transform 0.5s ease-in-out; /* Плавное переключение слайдов */
+        }
+
+        /* Каждый отдельный слайд */
+        .slide {
+            width: 100%; /* Каждый слайд занимает всю ширину контейнера */
+            flex-shrink: 0; /* Запрещаем уменьшение элементов внутри flex-контейнера */
+        }
+
+        /* Убираем отображение радиокнопок, они нужны только для управления */
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* Переключение слайдов при выборе радиокнопки */
+        #slide1:checked ~ .slides { transform: translateX(0%); }   /* Первый слайд */
+        #slide2:checked ~ .slides { transform: translateX(-100%); } /* Второй слайд */
+        #slide3:checked ~ .slides { transform: translateX(-200%); } /* Третий слайд */
+
+        /* Контейнер для точек управления (индикаторов) */
+        .controls {
+            text-align: center; /* Размещаем точки по центру */
+            margin-top: 10px; /* Добавляем отступ сверху */
+        }
+
+        /* Стиль для точек переключения */
+        .controls label {
+            display: inline-block; /* Размещаем точки в строку */
+            width: 15px; /* Размер точки */
+            height: 15px;
+            background: gray; /* Серый цвет точки */
+            border-radius: 50%; /* Делаем точки круглыми */
+            margin: 5px; /* Добавляем небольшой отступ между ними */
+            cursor: pointer; /* Делаем курсор в виде руки при наведении */
+        }
+
+        /* Меняем цвет активной точки при выборе слайда */
+        input:checked + label {
+            background: black;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-image: linear-gradient(to bottom, white, rgb(0, 0, 0)); 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            background-size: cover;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-right: 1rem;
+        }
+
+        img#logo {
+            max-width: 50px; 
+            height: auto;
+            margin-right: 1rem; 
+        }
+
+        .strip-img {
+            display: inline-block;
+            width: 100%; 
+            height: 50px; 
+            overflow: hidden;
+            position: relative;
+        }
+
+        .strip-img img {
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Черная навигационная панель */
+        nav {
+            background-color: black;
+            width: 100%;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 10px 15px;
+            transition: color 0.3s;
+        }
+
+        nav li a:hover {
+            color: #ccc;
+        }
+        /*Затемнение дисплея*/
+.overlay {
+    background-color: rgba(1, 0, 0, 0.77);
+    right: 0;
+    left: 0;
+    position: fixed; 
+    top: 0;
+    bottom: 0;
+    z-index: 11;
+    display: none;
+}
+/*Слой становится видимым*/
+.overlay:target {
+    display: block;
+}
+/*Растягиваю картинку на всю ширину попапа*/
+.window img { 
+   width: 100%;
+}
+/*Характеристики самого окна, которое появляется после клика на кнопке*/
+.window {
+    left: 50%;
+    z-index: 12;
+    margin: 0;
+    position: fixed;
+    padding: 15px;
+    border: 1px solid #383738;
+    background: #fefeff;
+    border-radius: 15px;
+    box-shadow: 0 13px 21px rgba(0,1,0,.19),0 21px 63px rgba(0,1,0,.31);
+    transform: translate(-50%, -450%);
+    transition: transform 0.6s ease-out;
+}
+/*Появление модального окошка с верхнего края экрана*/
+.overlay:target+.window {
+    transform: translate(-50%, 0);
+    top: 17%;
+}
+/*Внешний вид кнопки «Закрыть»*/
+.close {
+    top: -11px;
+    right: -11px;
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    padding: 0;
+    border: 2px solid #ccd;
+    border-radius: 15px;
+    background-color: rgba(61, 61, 61, 0.81);
+    box-shadow: 0 0 12px #010;
+    text-align: center;
+    text-decoration: none;
+    font: 18px sans-serif;
+    font-weight: bold;
+    transition: all ease .9s;
+}
+.close:before {
+    color: rgba(254, 254, 254, 0.89);
+    content: "X";
+    text-shadow: 0 1px 3px #010;
+    font-size: 14px;
+}
+/*Изменение характеристик при наведении на область */
+.close:hover {
+    background-color: rgba(253, 21, 0, 0.83);
+    transform: rotate(360deg);    
+}
+/*Оформление главной кнопки*/
+#button {
+  margin-right:2%;
+font-size: 33px;
+  border-radius: 11px;
+    background-color: rgba(63, 63, 63, 0.9);
+    box-shadow: 0 3px 10px #010;
+    text-align: center;
+    text-decoration: none;
+   background: #DCDCDC; 
+    padding: 2px 12px; 
+}
+   </style>
+</head>
+<body>
+    <header>
+        <img src="./static/img/loga.png" alt="Логотип" width="5%">   
+        <h1>HelPik</h1>
+    </header> 
+    
+    <!-- Черная навигационная панель -->
+    <nav>
+        <ul>
+              <a href="#b" id="button">i</a>
+<a href="#x" class="overlay" id="b"></a>
+   <div class="window">
+     <img src="static/img/roll.gif"/> 
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>
+            <li><a href="/ds">Доставки</a></li>
+            <li><a href="/kr">Корзина</a></li>
+            <li><a href="/shmot">Коллаборации</a></li>
+            <li><a href="/lk">Личный кабинет</a></li>
+        </ul>
+    </nav>
+
+    <!-- Контейнер для гифки -->
+    <div class="gif-container">
+        <img src="static/img/gif.gif" alt="Анимация">
+    </div>
+    
+    <!-- Основной контейнер слайдера -->
+    <div class="slider">
+        <!-- Радиокнопки для переключения слайдов -->
+        <input type="radio" name="slider" id="slide1" checked> <!-- Выбран по умолчанию -->
+        <input type="radio" name="slider" id="slide2">
+        <input type="radio" name="slider" id="slide3">
+
+        <!-- Контейнер всех слайдов -->
+        <div class="slides">
+            <div class="slide"><img src="static/img/Slide1.jpg" width="1000"></div>
+            <div class="slide"><img src="static/img/Slide2.png" width="1000"></div>
+            <div class="slide"><img src="static/img/Slide3.png" width="1000"></div>
+        </div>
+
+        <!-- Индикаторы (точки) для переключения -->
+        <div class="controls">
+            <label for="slide1"></label>
+            <label for="slide2"></label>
+            <label for="slide3"></label>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - HelPik</title>
+    <style>
+        body {
+            text-align: center;
+            background: linear-gradient(to bottom, white, #000000);
+            min-height: 100vh; 
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+        }
+
+        .logo-img {
+            width: 50px; 
+            margin-right: 10px; 
+        }
+
+        .logo-text {
+            color: black;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            padding: 5px 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 100px auto;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ddd;
+            margin: 15px auto;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #000;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #000;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+
+        .edit-btn {
+            background: #ffbb00;
+            color: #000;
+        }
+
+        .view-btn {
+            background: #000000;
+        }
+
+        .back-btn {
+            background: #000000;
+        }
+
+        .profile-info {
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .profile-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .profile-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .site-base {
+            max-width: 500px;
+        }
+
+        .site-profile {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            text-align: left;
+            align-items: center;
+        }
+
+        .site-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid #000;
+        }
+
+        .site-info {
+            flex: 1;
+        }
+
+        .site-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .site-phone {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="/static/img/loga.png" alt="Логотип HelPik" class="logo-img">
+        <div class="logo-text">HelPik</div>
+    </div>
+
+    <a href="/" class="close-btn">x</a>
+
+    <!-- Форма редактирования -->
+    <div class="container" id="editForm">
+        <h2>Редактирование профиля</h2>
+
+        <img id="avatarPreview" src="/static/img/default-avatar.png" class="avatar">
+        <input type="file" id="avatarInput" class="file-input" accept="image/*">
+        <label for="avatarInput" class="file-label">Выбрать аватар</label>
+
+        <div class="input-group">
+            <label>Имя и фамилия</label>
+            <input type="text" id="userName" placeholder="Введите ваше имя">
+        </div>
+
+        <div class="input-group">
+            <label>Номер телефона</label>
+            <input type="text" id="phoneNumber" placeholder="+7 (000) 000-00-00">
+        </div>
+
+        <button id="saveBtn">Сохранить изменения</button>
+    </div>
+
+    <!-- Просмотр профиля -->
+    <div class="container" id="profileView" style="display:none">
+        <h2>Мой профиль</h2>
+        
+        <img id="profileAvatar" src="/static/img/default-avatar.png" class="avatar">
+        
+        <div class="profile-info">
+            <div class="profile-item">
+                <div class="profile-label">Имя и фамилия</div>
+                <div id="profileName">Не указано</div>
+            </div>
+            
+            <div class="profile-item">
+                <div class="profile-label">Номер телефона</div>
+                <div id="profilePhone">Не указано</div>
+            </div>
+        </div>
+
+        <button class="edit-btn" id="editBtn">Редактировать профиль</button>
+        <button class="view-btn" id="viewSiteBtn">Посмотреть на сайте</button>
+    </div>
+
+    <!-- Отображение на сайте -->
+    <div class="container site-base" id="siteBase" style="display:none">
+        <h2>Ваш профиль на сайте HelPik</h2>
+        
+        <div class="site-profile">
+            <img id="siteAvatar" src="/static/img/default-avatar.png" class="site-avatar">
+            <div class="site-info">
+                <div class="site-name" id="siteName">Имя не указано</div>
+                <div class="site-phone" id="sitePhone">Телефон не указан</div>
+            </div>
+        </div>
+        
+        <button class="back-btn" id="backToProfile">Вернуться в профиль</button>
+    </div>
+
+    <script>
+        // Элементы
+        const editForm = document.getElementById('editForm');
+        const profileView = document.getElementById('profileView');
+        const siteBase = document.getElementById('siteBase');
+        
+        // Форма
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarPreview = document.getElementById('avatarPreview');
+        const userName = document.getElementById('userName');
+        const phoneNumber = document.getElementById('phoneNumber');
+        
+        // Профиль
+        const profileAvatar = document.getElementById('profileAvatar');
+        const profileName = document.getElementById('profileName');
+        const profilePhone = document.getElementById('profilePhone');
+        
+        // Сайт
+        const siteAvatar = document.getElementById('siteAvatar');
+        const siteName = document.getElementById('siteName');
+        const sitePhone = document.getElementById('sitePhone');
+
+        // Загрузка аватара
+        avatarInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    avatarPreview.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Сохранение
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            if (!userName.value.trim()) return alert('Введите ваше имя');
+            if (!phoneNumber.value.trim()) return alert('Введите номер телефона');
+            
+            profileAvatar.src = avatarPreview.src;
+            profileName.textContent = userName.value;
+            profilePhone.textContent = phoneNumber.value;
+            
+            editForm.style.display = 'none';
+            profileView.style.display = 'block';
+        });
+
+        // Навигация
+        document.getElementById('editBtn').addEventListener('click', function() {
+            profileView.style.display = 'none';
+            editForm.style.display = 'block';
+        });
+
+        document.getElementById('viewSiteBtn').addEventListener('click', function() {
+            siteAvatar.src = avatarPreview.src;
+            siteName.textContent = userName.value || 'Имя не указано';
+            sitePhone.textContent = phoneNumber.value || 'Телефон не указан';
+            
+            profileView.style.display = 'none';
+            siteBase.style.display = 'block';
+        });
+
+        document.getElementById('backToProfile').addEventListener('click', function() {
+            siteBase.style.display = 'none';
+            profileView.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
