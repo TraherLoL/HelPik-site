@@ -35,7 +35,7 @@ __https://disk.yandex.ru/d/s7BuULw9HJojdw__
 ## Дизайн
 Сайт будет с черно-белым дизайном.
 
-<img src="static\img\logo.jpg" alt="Logo image" width=20%>
+<img src="static\img\loga.png" alt="Loga image" width=20%>
 
 
 ## Основные функции системы
