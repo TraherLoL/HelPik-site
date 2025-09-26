@@ -128,7 +128,6 @@
         /* Контейнер для кнопки */
         .button-container {
             margin-top: auto;
-            grid-template-columns: repeat(3, 1fr);
             padding-top: 10px;
             min-height: 50px;
         }
@@ -147,20 +146,18 @@
     </ul>
 
     <div class="product-grid">
-        {% for item in shop %}
         <div class="product-card">
             <div class="product-image">
                 <img src="/static/img/akt1shmot1.png" alt="Свитшот Плохие манеры">
             </div>
             <div class="product-content">
-                <h3 class="product-title">{{ item[1] }}</h3>
-                <p class="product-desc">{{ item[2] }}</p>
-                <span class="price">{{ item[3] }}</span>
+                <h3 class="product-title">Свитшот "Плохие манеры"</h3>
+                <p class="product-desc">Качественный свитшот с уникальным принтом</p>
+                <span class="price">Цена: ₽1800</span>
                 <div class="button-container">
-                    <button class="buy-btn"></button>
+                    <button class="buy-btn">Купить</button>
                 </div>
             </div>
-        {% endfor %}
         </div>
 
         <div class="product-card">
